@@ -5,6 +5,7 @@ from flask import jsonify, Flask
 from flask.logging import default_handler
 
 from core.extensions import db, ma, migrator
+from app.controllers.controller import bp
 from app.data import models as _models
 
 
@@ -31,6 +32,10 @@ def register_extensions(app):
     db.init_app(app)
     ma.init_app(app)
     migrator.init_app(app)
+
+
+def register_blueprints(app):
+    app.register_blueprint(bp)
 
 
 def register_logger(app):
@@ -70,6 +75,7 @@ def create_app(config_name="default"):
     flask_app.app_context().push()
 
     register_logger(flask_app)
+    register_blueprints(flask_app)
     register_extensions(flask_app)
     register_error_handlers(flask_app)
 

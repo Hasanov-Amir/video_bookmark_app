@@ -13,3 +13,4 @@ class Config:
     
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{DB_PATH}"
 
+    VIDEO_ALLOWED_EXTENSIONS = ("mp4", "mov", "avi", "wmv", "webm")

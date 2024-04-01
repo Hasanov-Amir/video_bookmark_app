@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Bookmark App</title>
+</head>
+<body>
+    <input type="file" id="ctrl" webkitdirectory directory multiple/>
+
+    <script>
+        document.getElementById('ctrl').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                const folderPath = files[0].webkitRelativePath.split('/')[0];
+                console.log("Folder path:", folderPath);
+            }
+        });
+    </script>
+</body>
+</html>
