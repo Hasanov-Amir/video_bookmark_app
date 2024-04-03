@@ -1,28 +1,5 @@
 {
-    "name": "Python folder",
-    "children": [
-        {
-            "id": "123",
-            "name": "lesson_1.mp4",
-            "duration": "22:01",
-            "path": "C:/path/lesson_1.mp4"
-        },
-        {
-            "id": "123",
-            "name": "lesson_1.mp4",
-            "duration": "22:01",
-            "path": "C:/path/lesson_1.mp4"
-        },
-        {
-            "name": "Django Folder",
-            "children": [
-                {
-                    "id": "123",
-                    "name": "lesson_1.mp4",
-                    "duration": "22:01",
-                    "path": "C:/path/lesson_1.mp4"
-                }
-            ]
-        }
-    ]
+    "id": {
+        "id": 1
+    }
 }

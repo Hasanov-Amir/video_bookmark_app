@@ -37,6 +37,11 @@ class CRUDMixin:
         db.session.add(self)
         db.session.commit()
         return self
+    
+    @classmethod
+    def bulk_create(cls, objects):
+        db.session.bulk_save_objects(objects)
+        db.session.commit()
 
 
 class Model(db.Model, CRUDMixin):

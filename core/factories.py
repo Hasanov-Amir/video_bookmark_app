@@ -3,6 +3,7 @@ import logging
 
 from flask import jsonify, Flask
 from flask.logging import default_handler
+from marshmallow import ValidationError
 
 from core.extensions import db, ma, migrator
 from app.controllers.controller import bp
@@ -65,6 +66,13 @@ def register_error_handlers(app):
     app.register_error_handler(401, create_error_handler(401, "Unathorized"))
     app.register_error_handler(403, create_error_handler(403, "Forbidden"))
     app.register_error_handler(404, create_error_handler(404, "Not found"))
+    app.register_error_handler(405, create_error_handler(405, "Method not allowed"))
+
+    @app.errorhandler(ValidationError)
+    def handle_validation_error(error):
+        response = jsonify({'errors': error.messages})
+        response.status_code = 400
+        return response
 
 
 def create_app(config_name="default"):

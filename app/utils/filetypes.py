@@ -10,13 +10,9 @@ class FolderType(fields.Field):
     def _deserialize(self, value, attr, data, **kwargs):
         folder_path = value
 
-        if not folder_path:
-            error = "No folder selected for uploading."
-            return ValidationError(error)
-
         if not os.access(folder_path, os.W_OK):
             error = "Invalid folder path"
-            return ValidationError(error)
+            raise ValidationError(error)
 
         return value
 
@@ -27,14 +23,22 @@ class FileType(fields.Field):
 
         if not file_path:
             error = "No file selected for uploading."
-            return ValidationError(error)
-        
+            raise ValidationError(error)
+
         if not os.access(file_path, os.W_OK):
             error = "Invalid folder path"
-            return ValidationError(error)
+            raise ValidationError(error)
 
         if not allowed_extension(file_path):
             error = f'Allowed file types are {current_app.config["VIDEO_ALLOWED_EXTENSIONS"]}.'
-            return ValidationError(error)
+            raise ValidationError(error)
 
+        return value
+
+
+class NoteTimeType(fields.Field):
+    def _deserialize(self, value, attr, data, **kwargs):
+        if not isinstance(value, int):
+            error = 'Invalid value, expected int'
+            raise ValidationError(error)
         return value
