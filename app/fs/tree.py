@@ -3,34 +3,38 @@ import uuid
 
 from pymediainfo import MediaInfo
 
-from app.data.models import Folder, Video, Note
+from app.data.models import Folder, Note, Video
 from core.settings.base import Config
 
 
-class FSTreeJson:
+class FS:
     def find_parent(self, child_key):
         parent = Folder.filter(id=child_key)
         return parent.first()
 
     def add_note_to_video(self, video_id, text, timestamp):
-        note = Note.create(video=uuid.UUID(video_id), note_text=text, note_timestamp=timestamp)
+        note = Note.create(
+            video=uuid.UUID(video_id), note_text=text, note_timestamp=timestamp
+        )
         return note
 
     def inspect(self, path):
         for dirpath, dirnames, filenames in os.walk(path):
             parent_folder_name = dirpath.split("\\")[-1]
             parent_folder = Folder.filter(folder_name=parent_folder_name)
-            # print(parent_folder[0].folder_parent)
             if parent_folder:
                 parent_folder = parent_folder[0]
             else:
                 parent_folder = Folder.create(folder_name=parent_folder_name)
             folders = []
             for child_folder_name in dirnames:
-                if not Folder.filter(folder_name=child_folder_name, folder_parent=parent_folder.id):
+                if not Folder.filter(
+                    folder_name=child_folder_name, folder_parent=parent_folder.id
+                ):
                     folders.append(
                         Folder(
-                            folder_name=child_folder_name, folder_parent=parent_folder.id
+                            folder_name=child_folder_name,
+                            folder_parent=parent_folder.id,
                         )
                     )
             Folder.bulk_create(folders)
@@ -60,13 +64,5 @@ class FSTreeJson:
         duration_in_ms = file_info.tracks[0].duration
         return (file_path, file_name, duration_in_ms)
 
-    def __str__(self):
-        attributes = [
-            f"{key}: {getattr(self, key)}"
-            for key in dir(self)
-            if not key.startswith("__") and not callable(getattr(self, key))
-        ]
-        return f"{', '.join(attributes)}"
 
-
-fs_json = FSTreeJson()
+fs = FS()

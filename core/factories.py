@@ -1,13 +1,14 @@
-import sys
 import logging
+import sys
 
-from flask import jsonify, Flask
+from flask import Flask, jsonify
 from flask.logging import default_handler
+from flask_cors import CORS
 from marshmallow import ValidationError
 
-from core.extensions import db, ma, migrator
 from app.controllers.controller import bp
 from app.data import models as _models
+from core.extensions import db, ma, migrator
 
 
 class SettingsError(Exception):
@@ -80,11 +81,14 @@ def create_app(config_name="default"):
 
     flask_app = Flask(__name__)
     flask_app.config.from_object(config_obj)
+    flask_app.config['CORS_HEADERS'] = 'Content-Type'
     flask_app.app_context().push()
 
     register_logger(flask_app)
     register_blueprints(flask_app)
     register_extensions(flask_app)
     register_error_handlers(flask_app)
+
+    CORS(flask_app, resources={r"/*": {"origins": "*", "methods": ["GET", "POST"]}})
 
     return flask_app

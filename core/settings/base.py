@@ -4,9 +4,9 @@ from pathlib import Path
 
 class Config:
     DEBUG = True
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv("SECRET_KEY")
 
-    PROJECT_NAME = 'video_bookmark_app'
+    PROJECT_NAME = "video_bookmark_app"
 
     BASE_DIR = Path(__file__).parent.parent.parent
 

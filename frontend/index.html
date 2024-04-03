@@ -4,18 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Bookmark App</title>
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <input type="file" id="ctrl" webkitdirectory directory multiple/>
-
-    <script>
-        document.getElementById('ctrl').addEventListener('change', function(e) {
-            const files = e.target.files;
-            if (files.length > 0) {
-                const folderPath = files[0].webkitRelativePath.split('/')[0];
-                console.log("Folder path:", folderPath);
-            }
-        });
-    </script>
+    <div class="main">
+        <div class="explorer">
+            <div class="dir">
+                <div class="icon"></div>
+                <div class="title">
+                    <h1>ololol</h1>
+                </div>
+            </div>
+            <div class="file">
+                <div class="icon"></div>
+                <div class="title">
+                    <h1>ULLUUL</h1>
+                </div>
+            </div>
+        </div>
+        <div class="player">
+            <div class="left-side">
+                <video src=""></video>
+            </div>
+            <div class="right-side">
+                <div class="notes"></div>
+                <div class="videos"></div>
+            </div>
+        </div>
+    </div>
+    <script src="static/script.js"></script>
 </body>
 </html>

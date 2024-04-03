@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, String, BigInteger
+from sqlalchemy import BigInteger, Boolean, String
 from sqlalchemy.dialects.postgresql import UUID
 
 from database.base import Column, Model
@@ -11,10 +11,10 @@ class Folder(Model):
     folder_parent = Column("folder_parent", UUID(as_uuid=True), nullable=True)
 
     def __str__(self):
-        return f"{self.id} : {self.video_title}"
+        return f"{self.id} : {self.folder_name}"
 
     def __repr__(self):
-        return f"{self.id} : {self.video_title}"
+        return f"{self.id} : {self.folder_name}"
 
 
 class Video(Model):
